@@ -22,7 +22,7 @@ class WaypointPlanner:
 
 			for obstacle in self.env.obstacles:
 				obstacle_max_coord = obstacle[1]
-				if current_state[0] - 1 <= obstacle_max_coord[0]: and current_state[0] return (None, -1)
+				if current_state[0] - 1 <= obstacle_max_coord[0] and current_state[0]: return (None, -1)
 
 			return ((current_state[0]-1, current_state[1]), 1)
 

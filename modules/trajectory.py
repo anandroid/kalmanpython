@@ -10,7 +10,7 @@ class Trajectory:
 		self.move_actions = ["moveF"]
 
 	def _euclidean_distance(self, state1, state2):
-    	return math.sqrt((state1[0]-state2[0])**2 + (state1[1]-state2[1])**2)
+    	 return math.sqrt((state1[0]-state2[0])**2 + (state1[1]-state2[1])**2)
 
 	def _calculate_correction_angle(self, current_point):
 		distance_error_offset = 1/self._euclidean_distance(current_point, self.to_point)
