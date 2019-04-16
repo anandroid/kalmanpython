@@ -3,6 +3,8 @@ from environment import Environment
 from agent import Agent
 import time
 import math
+import matplotlib.pyplot as plt
+import numpy as np
 
 class WaypointPlanner:
 
@@ -70,7 +72,7 @@ class WaypointPlanner:
 		while(len(priority_queue)>0):
 
 			print("----- state loop -----")
-			(cost, current_state) = heapq.heappop(priority_queue)
+			(cost, current_state) = heapq.heappop(priority_queue) 
 	        
 			if current_state[0]==goal_state[0] and current_state[1]==goal_state[1]:
 				break
@@ -81,9 +83,12 @@ class WaypointPlanner:
 				print(nextstate, cost)
 				if cost != -1 and self._state_to_key(nextstate) not in parsed_states:
 					cost = cost + self._euclidean_distance(nextstate, goal_state)
+					if prev_state and prev_state[0]-nextstate[0] != 0 and prev_state[1]-nextstate[1] != 0: cost += 1
 					parsed_states[self._state_to_key(nextstate)] = 1
 					heapq.heappush(priority_queue, (cost, nextstate))
 					trace[self._state_to_key(nextstate)] = (current_state, action)
+
+			prev_state = current_state
 
 		if current_state[0]==goal_state[0] and current_state[1]==goal_state[1]:
 			print("solved")
@@ -95,8 +100,30 @@ class WaypointPlanner:
 			print("unsolved")
 
 		state_list.reverse()
+		state_list.append(goal_state)
 
 		return state_list
+
+	def visualise(self, state_list):
+
+		mat = np.zeros(( (self.env.grid_max_coord[1])+1, (self.env.grid_max_coord[0])+1 ))
+
+		for obstacle in self.env.obstacles:
+			print(obstacle)
+			x_list = [x for x in range(obstacle[0][0],obstacle[1][0]+1)]
+			y_list = [y for y in range(obstacle[0][1],obstacle[1][1]+1)]
+			for x in x_list:
+				for y in y_list:
+					mat[y,x] = 1
+
+		for state in state_list:
+			mat[state[1],state[0]] = 0.5
+
+		mat[self.env.agent_coord[1], self.env.agent_coord[0]] = 2
+		mat[self.env.goal_coord[1], self.env.goal_coord[0]] = 2
+
+		plt.matshow(mat)
+		plt.show()
 
 def runner():
 
@@ -110,5 +137,7 @@ def runner():
 	plan = wp.plan()
 
 	print(plan)
+
+	wp.visualise(plan)
 
 runner()
