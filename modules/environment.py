@@ -60,5 +60,5 @@ def runner():
 
 	Env.visualise()
 
-runner()
+#runner()
 
