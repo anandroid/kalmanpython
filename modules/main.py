@@ -38,7 +38,7 @@ ble2 = BLE(4, -73, (100,0))
 ble3 = BLE(4, -73, (50,50))
 
 wp = WaypointPlanner(env, agent)
-plan = wp.plan()
+plan,actions = wp.plan()
 
 print(plan)
 

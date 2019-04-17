@@ -5,10 +5,10 @@ import scipy.stats
 from agent import Agent
 
 
-SIZE_FACTOR_OF_WAYPOINT = 1
+SIZE_FACTOR_OF_WAYPOINT = 6
 BELIEF_FOR_ACTION_SUCCESSFUL = 0.8
 BELIEF_FOR_ADJACENT_ACTION = 0.4
-BELIF_FOR_OTHER_ACTION = 0.2
+BELIEF_FOR_OTHER_ACTION = 0.2
 
 class WayPoint:
       def __init__(self,W,means,variances):
@@ -143,7 +143,7 @@ def runner():
 
         print("Predicted  : "+waypoint_name)
 
-        beliefs[waypoint_name]+=0.5
+        beliefs[waypoint_name]+=BELIEF_FOR_ACTION_SUCCESSFUL
 
         action = possible_actions[random.randint(0,len(possible_actions)-1)]
 
@@ -153,10 +153,10 @@ def runner():
 
         if action == "moveLeft":
              if is_valid_waypoint((waypoint_tuple[0]-1,waypoint_tuple[1])):
-                 beliefs[str(waypoint_tuple[0]-1)+"_"+str(waypoint_tuple[1])]+=BELIEF_FOR_ADJACENT_ACTION
+                 beliefs[str(waypoint_tuple[0]-1)+"_"+str(waypoint_tuple[1])]+=BELIEF_FOR_ACTION_SUCCESSFUL
                  test_point = (test_point[0]-1,test_point[1])
              else:
-                 beliefs[waypoint_name]+=BELIEF_FOR_ADJACENT_ACTION
+                 beliefs[waypoint_name]+=BELIEF_FOR_ACTION_SUCCESSFUL
 
              if is_valid_waypoint((waypoint_tuple[0] - 1, waypoint_tuple[1]-1)):
                  beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1]-1)] += BELIEF_FOR_ADJACENT_ACTION
@@ -169,12 +169,12 @@ def runner():
                  beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
              if is_valid_waypoint((waypoint_tuple[0], waypoint_tuple[1] - 1)):
-                 beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] - 1)] += BELIEF_FOR_ADJACENT_ACTION
+                 beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] - 1)] += BELIEF_FOR_OTHER_ACTION
              else:
                  beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
              if is_valid_waypoint((waypoint_tuple[0], waypoint_tuple[1] + 1)):
-                 beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] + 1)] += BELIEF_FOR_ADJACENT_ACTION
+                 beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] + 1)] += BELIEF_FOR_OTHER_ACTION
              else:
                  beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
@@ -212,12 +212,12 @@ def runner():
                 beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0], waypoint_tuple[1] - 1)):
-                beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] - 1)] += BELIEF_FOR_ADJACENT_ACTION
+                beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] - 1)] += BELIEF_FOR_OTHER_ACTION
             else:
                 beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0], waypoint_tuple[1] + 1)):
-                beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] + 1)] += BELIEF_FOR_ADJACENT_ACTION
+                beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] + 1)] += BELIEF_FOR_OTHER_ACTION
             else:
                 beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
@@ -227,10 +227,10 @@ def runner():
                 beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0] + 1, waypoint_tuple[1])):
-                beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1])] += BELIEF_FOR_ADJACENT_ACTION
+                beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1])] += BELIEF_FOR_ACTION_SUCCESSFUL
                 test_point = (test_point[0] + 1, test_point[1])
             else:
-                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
+                beliefs[waypoint_name] += BELIEF_FOR_ACTION_SUCCESSFUL
 
             if is_valid_waypoint((waypoint_tuple[0] + 1, waypoint_tuple[1] + 1)):
                 beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1] + 1)] += BELIEF_FOR_ADJACENT_ACTION
@@ -239,7 +239,7 @@ def runner():
 
         if action == "moveForward":
             if is_valid_waypoint((waypoint_tuple[0] - 1, waypoint_tuple[1])):
-                beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1])] += BELIEF_FOR_ADJACENT_ACTION
+                beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1])] += BELIEF_FOR_OTHER_ACTION
             else:
                 beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
@@ -259,10 +259,10 @@ def runner():
                 beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0], waypoint_tuple[1] + 1)):
-                beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] + 1)] += BELIEF_FOR_ADJACENT_ACTION
+                beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] + 1)] += BELIEF_FOR_ACTION_SUCCESSFUL
                 test_point = (test_point[0], test_point[1]+1)
             else:
-                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
+                beliefs[waypoint_name] += BELIEF_FOR_ACTION_SUCCESSFUL
 
             if is_valid_waypoint((waypoint_tuple[0] + 1, waypoint_tuple[1] - 1)):
                 beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1] - 1)] += BELIEF_FOR_ADJACENT_ACTION
@@ -270,7 +270,7 @@ def runner():
                 beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0] + 1, waypoint_tuple[1])):
-                beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1])] += BELIEF_FOR_ADJACENT_ACTION
+                beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1])] += BELIEF_FOR_OTHER_ACTION
             else:
                 beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
@@ -281,7 +281,7 @@ def runner():
 
         if action == "moveBackward":
             if is_valid_waypoint((waypoint_tuple[0] - 1, waypoint_tuple[1])):
-                beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1])] += BELIEF_FOR_ADJACENT_ACTION
+                beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1])] += BELIEF_FOR_OTHER_ACTION
             else:
                 beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
@@ -296,10 +296,10 @@ def runner():
                 beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0], waypoint_tuple[1] - 1)):
-                beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] - 1)] += BELIEF_FOR_ADJACENT_ACTION
+                beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] - 1)] += BELIEF_FOR_ACTION_SUCCESSFUL
                 test_point = (test_point[0],test_point[1]-1)
             else:
-                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
+                beliefs[waypoint_name] += BELIEF_FOR_ACTION_SUCCESSFUL
 
             if is_valid_waypoint((waypoint_tuple[0], waypoint_tuple[1] + 1)):
                 beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] + 1)] += BELIEF_FOR_ADJACENT_ACTION
@@ -312,7 +312,7 @@ def runner():
                 beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0] + 1, waypoint_tuple[1])):
-                beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1])] += BELIEF_FOR_ADJACENT_ACTION
+                beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1])] += BELIEF_FOR_OTHER_ACTION
             else:
                 beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
@@ -336,6 +336,6 @@ def runner():
 
 
 
-runner()
+#runner()
 
 

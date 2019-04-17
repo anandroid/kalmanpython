@@ -15,6 +15,7 @@ import scipy.stats
 
 import seaborn as sns
 # settings for seaborn plotting style
+'''
 sns.set(color_codes=True)
 # settings for seaborn plot sizes
 sns.set(rc={'figure.figsize':(5,5)})
@@ -35,7 +36,17 @@ ax.set(xlabel='Normal Distribution', ylabel='Frequency')
 
 print(math.log(scipy.stats.norm(-73, 2).pdf(-76)))
 
+'''
+
 print (math.log(0.4))
+print (math.log(0.8))
+print (math.log(0.2))
+
+print("---")
+print (math.log(0.4)/math.log(0.8))
+print (math.log(0.2)/math.log(0.8))
+
+
 
 
 
