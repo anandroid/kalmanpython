@@ -66,6 +66,7 @@ class WaypointPlanner:
 		trace = {}
 		trace[self._state_to_key(init_state)] = None
 
+        #To-Do we need to get the init state based on the initial triangulation calculation
 		current_state = init_state
 		prev_state = None
 
