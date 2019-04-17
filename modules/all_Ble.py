@@ -6,6 +6,9 @@ from agent import Agent
 
 
 SIZE_FACTOR_OF_WAYPOINT = 1
+BELIEF_FOR_ACTION_SUCCESSFUL = 0.8
+BELIEF_FOR_ADJACENT_ACTION = 0.4
+BELIF_FOR_OTHER_ACTION = 0.2
 
 class WayPoint:
       def __init__(self,W,means,variances):
@@ -150,173 +153,173 @@ def runner():
 
         if action == "moveLeft":
              if is_valid_waypoint((waypoint_tuple[0]-1,waypoint_tuple[1])):
-                 beliefs[str(waypoint_tuple[0]-1)+"_"+str(waypoint_tuple[1])]+=0.6
+                 beliefs[str(waypoint_tuple[0]-1)+"_"+str(waypoint_tuple[1])]+=BELIEF_FOR_ADJACENT_ACTION
                  test_point = (test_point[0]-1,test_point[1])
              else:
-                 beliefs[waypoint_name]+=0.6
+                 beliefs[waypoint_name]+=BELIEF_FOR_ADJACENT_ACTION
 
              if is_valid_waypoint((waypoint_tuple[0] - 1, waypoint_tuple[1]-1)):
-                 beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1]-1)] += 0.3
+                 beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1]-1)] += BELIEF_FOR_ADJACENT_ACTION
              else:
-                 beliefs[waypoint_name]+=0.3
+                 beliefs[waypoint_name]+=BELIEF_FOR_ADJACENT_ACTION
 
              if is_valid_waypoint((waypoint_tuple[0] - 1, waypoint_tuple[1] + 1)):
-                 beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1] + 1)] += 0.3
+                 beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1] + 1)] += BELIEF_FOR_ADJACENT_ACTION
              else:
-                 beliefs[waypoint_name] += 0.3
+                 beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
              if is_valid_waypoint((waypoint_tuple[0], waypoint_tuple[1] - 1)):
-                 beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] - 1)] += 0.2
+                 beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] - 1)] += BELIEF_FOR_ADJACENT_ACTION
              else:
-                 beliefs[waypoint_name] += 0.2
+                 beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
              if is_valid_waypoint((waypoint_tuple[0], waypoint_tuple[1] + 1)):
-                 beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] + 1)] += 0.2
+                 beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] + 1)] += BELIEF_FOR_ADJACENT_ACTION
              else:
-                 beliefs[waypoint_name] += 0.2
+                 beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
              if is_valid_waypoint((waypoint_tuple[0]+1, waypoint_tuple[1] - 1)):
-                 beliefs[str(waypoint_tuple[0]+1) + "_" + str(waypoint_tuple[1] - 1)] += 0.3
+                 beliefs[str(waypoint_tuple[0]+1) + "_" + str(waypoint_tuple[1] - 1)] += BELIEF_FOR_ADJACENT_ACTION
              else:
-                 beliefs[waypoint_name] += 0.3
+                 beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
              if is_valid_waypoint((waypoint_tuple[0] + 1, waypoint_tuple[1])):
-                 beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1])] += 0.3
+                 beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1])] += BELIEF_FOR_ADJACENT_ACTION
              else:
-                 beliefs[waypoint_name] += 0.3
+                 beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
              if is_valid_waypoint((waypoint_tuple[0] + 1, waypoint_tuple[1] + 1)):
-                 beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1] + 1)] += 0.3
+                 beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1] + 1)] += BELIEF_FOR_ADJACENT_ACTION
              else:
-                 beliefs[waypoint_name] += 0.3
+                 beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
 
 
         if action == "moveRight":
             if is_valid_waypoint((waypoint_tuple[0] - 1, waypoint_tuple[1])):
-                beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1])] += 0.3
+                beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1])] += BELIEF_FOR_ADJACENT_ACTION
             else:
-                beliefs[waypoint_name] += 0.3
+                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0] - 1, waypoint_tuple[1] - 1)):
-                beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1] - 1)] += 0.3
+                beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1] - 1)] += BELIEF_FOR_ADJACENT_ACTION
             else:
-                beliefs[waypoint_name] += 0.3
+                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0] - 1, waypoint_tuple[1] + 1)):
-                beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1] + 1)] += 0.3
+                beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1] + 1)] += BELIEF_FOR_ADJACENT_ACTION
             else:
-                beliefs[waypoint_name] += 0.3
+                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0], waypoint_tuple[1] - 1)):
-                beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] - 1)] += 0.2
+                beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] - 1)] += BELIEF_FOR_ADJACENT_ACTION
             else:
-                beliefs[waypoint_name] += 0.2
+                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0], waypoint_tuple[1] + 1)):
-                beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] + 1)] += 0.2
+                beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] + 1)] += BELIEF_FOR_ADJACENT_ACTION
             else:
-                beliefs[waypoint_name] += 0.2
+                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0] + 1, waypoint_tuple[1] - 1)):
-                beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1] - 1)] += 0.3
+                beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1] - 1)] += BELIEF_FOR_ADJACENT_ACTION
             else:
-                beliefs[waypoint_name] += 0.3
+                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0] + 1, waypoint_tuple[1])):
-                beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1])] += 0.6
+                beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1])] += BELIEF_FOR_ADJACENT_ACTION
                 test_point = (test_point[0] + 1, test_point[1])
             else:
-                beliefs[waypoint_name] += 0.6
+                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0] + 1, waypoint_tuple[1] + 1)):
-                beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1] + 1)] += 0.3
+                beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1] + 1)] += BELIEF_FOR_ADJACENT_ACTION
             else:
-                beliefs[waypoint_name] += 0.3
+                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
         if action == "moveForward":
             if is_valid_waypoint((waypoint_tuple[0] - 1, waypoint_tuple[1])):
-                beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1])] += 0.2
+                beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1])] += BELIEF_FOR_ADJACENT_ACTION
             else:
-                beliefs[waypoint_name] += 0.2
+                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0] - 1, waypoint_tuple[1] - 1)):
-                beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1] - 1)] += 0.3
+                beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1] - 1)] += BELIEF_FOR_ADJACENT_ACTION
             else:
-                beliefs[waypoint_name] += 0.3
+                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0] - 1, waypoint_tuple[1] + 1)):
-                beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1] + 1)] += 0.3
+                beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1] + 1)] += BELIEF_FOR_ADJACENT_ACTION
             else:
-                beliefs[waypoint_name] += 0.3
+                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0], waypoint_tuple[1] - 1)):
-                beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] - 1)] += 0.3
+                beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] - 1)] += BELIEF_FOR_ADJACENT_ACTION
             else:
-                beliefs[waypoint_name] += 0.3
+                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0], waypoint_tuple[1] + 1)):
-                beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] + 1)] += 0.6
+                beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] + 1)] += BELIEF_FOR_ADJACENT_ACTION
                 test_point = (test_point[0], test_point[1]+1)
             else:
-                beliefs[waypoint_name] += 0.6
+                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0] + 1, waypoint_tuple[1] - 1)):
-                beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1] - 1)] += 0.3
+                beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1] - 1)] += BELIEF_FOR_ADJACENT_ACTION
             else:
-                beliefs[waypoint_name] += 0.3
+                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0] + 1, waypoint_tuple[1])):
-                beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1])] += 0.2
+                beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1])] += BELIEF_FOR_ADJACENT_ACTION
             else:
-                beliefs[waypoint_name] += 0.2
+                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0] + 1, waypoint_tuple[1] + 1)):
-                beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1] + 1)] += 0.3
+                beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1] + 1)] += BELIEF_FOR_ADJACENT_ACTION
             else:
-                beliefs[waypoint_name] += 0.3
+                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
         if action == "moveBackward":
             if is_valid_waypoint((waypoint_tuple[0] - 1, waypoint_tuple[1])):
-                beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1])] += 0.2
+                beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1])] += BELIEF_FOR_ADJACENT_ACTION
             else:
-                beliefs[waypoint_name] += 0.2
+                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0] - 1, waypoint_tuple[1] - 1)):
-                beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1] - 1)] += 0.3
+                beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1] - 1)] += BELIEF_FOR_ADJACENT_ACTION
             else:
-                beliefs[waypoint_name] += 0.3
+                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0] - 1, waypoint_tuple[1] + 1)):
-                beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1] + 1)] += 0.3
+                beliefs[str(waypoint_tuple[0] - 1) + "_" + str(waypoint_tuple[1] + 1)] += BELIEF_FOR_ADJACENT_ACTION
             else:
-                beliefs[waypoint_name] += 0.3
+                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0], waypoint_tuple[1] - 1)):
-                beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] - 1)] += 0.6
+                beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] - 1)] += BELIEF_FOR_ADJACENT_ACTION
                 test_point = (test_point[0],test_point[1]-1)
             else:
-                beliefs[waypoint_name] += 0.6
+                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0], waypoint_tuple[1] + 1)):
-                beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] + 1)] += 0.2
+                beliefs[str(waypoint_tuple[0]) + "_" + str(waypoint_tuple[1] + 1)] += BELIEF_FOR_ADJACENT_ACTION
             else:
-                beliefs[waypoint_name] += 0.2
+                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0] + 1, waypoint_tuple[1] - 1)):
-                beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1] - 1)] += 0.3
+                beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1] - 1)] += BELIEF_FOR_ADJACENT_ACTION
             else:
-                beliefs[waypoint_name] += 0.3
+                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0] + 1, waypoint_tuple[1])):
-                beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1])] += 0.3
+                beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1])] += BELIEF_FOR_ADJACENT_ACTION
             else:
-                beliefs[waypoint_name] += 0.3
+                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
             if is_valid_waypoint((waypoint_tuple[0] + 1, waypoint_tuple[1] + 1)):
-                beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1] + 1)] += 0.3
+                beliefs[str(waypoint_tuple[0] + 1) + "_" + str(waypoint_tuple[1] + 1)] += BELIEF_FOR_ADJACENT_ACTION
             else:
-                beliefs[waypoint_name] += 0.3
+                beliefs[waypoint_name] += BELIEF_FOR_ADJACENT_ACTION
 
         print("Action took : "+action+" New point "+str(test_point[0])+"_"+str(test_point[1]));
 
