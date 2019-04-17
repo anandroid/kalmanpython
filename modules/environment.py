@@ -45,7 +45,7 @@ def runner():
 
 	Env = Environment((grid_min_coord_x, grid_min_coord_y), (grid_max_coord_x,grid_max_coord_y), (agent_coord_x,agent_coord_y), (goal_coord_x,goal_coord_y))
 
-	flag = input("do you want to enter any obstacles (Y/N)? ")
+	flag = raw_input("do you want to enter any obstacles (Y/N)? ")
 	
 	while flag == "Y":
 		
@@ -56,9 +56,9 @@ def runner():
 		
 		Env.add_obstacle((bottom_left_coord_x,bottom_left_coord_y), (top_right_coord_x,top_right_coord_y))
 
-		flag = input("do you want to enter more obstacles (Y/N)? ")
+		flag = raw_input("do you want to enter more obstacles (Y/N)? ")
 
 	Env.visualise()
 
-# runner()
+runner()
 
