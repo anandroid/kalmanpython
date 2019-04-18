@@ -66,7 +66,6 @@ class WaypointPlanner:
 		trace = {}
 		trace[self._state_to_key(init_state)] = None
 
-        #To-Do we need to get the init state based on the initial triangulation calculation
 		current_state = init_state
 		prev_state = None
 
@@ -125,20 +124,3 @@ class WaypointPlanner:
 
 		plt.matshow(mat)
 		plt.show()
-
-def runner():
-
-	env = Environment((0,0), (100,50), (1,1), (80,30))
-	agent = Agent()
-
-	env.add_obstacle((25,10),(75,20))
-	env.add_obstacle((25,35), (75,45))
-
-	wp = WaypointPlanner(env, agent)
-	plan = wp.plan()
-
-	print(plan)
-
-	wp.visualise(plan)
-
-#runner()

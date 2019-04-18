@@ -50,37 +50,5 @@ def localise(ble1, dist1, ble2, dist2, ble3, dist3):
 
 	return solution
 
-def runner():
-
-	ble1 = BLE(4, -73, (0,0))
-	ble2 = BLE(4, -73, (0,100))
-	ble3 = BLE(4, -73, (50,50))
-	ble4 = BLE(4, -73, (50, 30))
-	ble5 = BLE(4, -73, (40, 50))
-
-	test_point = (40, 50)
-
-	rssi1 = ble1.coord_to_rssi(test_point)
-	dist1 = ble1.rssi_to_distance(rssi1)
-
-	rssi2 = ble2.coord_to_rssi(test_point)
-	dist2 = ble2.rssi_to_distance(rssi2)
-
-	rssi3 = ble3.coord_to_rssi(test_point)
-	dist3 = ble3.rssi_to_distance(rssi3)
-
-	point = localise(ble1, dist1, ble2, dist2, ble3, dist3)
-	print(point)
-
-	#for i in range(0,100):
-	print(ble1.coord_to_rssi(test_point))
-	print(ble2.coord_to_rssi(test_point))
-	print(ble3.coord_to_rssi(test_point))
-	print(ble4.coord_to_rssi(test_point))
-	print(ble5.coord_to_rssi(test_point))
-
-
-
-#runner()
 
 

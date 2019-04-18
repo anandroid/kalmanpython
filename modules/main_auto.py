@@ -1,85 +1,58 @@
-from environment import Environment
-from ble import BLE
-from agent import Agent
-from trajectory import Trajectory
-from waypoint_planner import WaypointPlanner
-from trajectory import Trajectory
-from pomdp_waypoint_planner import PomdpWaypointPlanner
-import numpy as np
-import random
 import math
+import random
+
 import scipy.stats
-from all_Ble import A_BLE
+
 import all_Ble as blemodule
 import tupleutilities as TU
-
+from agent import Agent
+from all_Ble import A_BLE
+from environment import Environment
+from pomdp_waypoint_planner import PomdpWaypointPlanner
 
 BELIEF_FOR_ACTION_SUCCESSFUL = 0.8
 BELIEF_FOR_ADJACENT_ACTION = 0.4
 BELIEF_FOR_OTHER_ACTION = 0.2
 
-PRUNE_ACTION_FACTOR=2
+PRUNE_ACTION_FACTOR = 2
 
-BELIEF_FACTOR=0.1
-EPOCH_FACTOR=1
-
-
-grid_min_coord_x = 0
-grid_min_coord_y = 0
-grid_max_coord_x = 10
-grid_max_coord_y = 10
-
-initial_agent_coord_x = 1
-initial_agent_coord_y = 1
-
-goal_coord_x = 9
-goal_coord_y = 5
-
-env = Environment((grid_min_coord_x, grid_min_coord_y), (grid_max_coord_x, grid_max_coord_y),
-                  (initial_agent_coord_x, initial_agent_coord_y), (goal_coord_x, goal_coord_y))
-
-flag = "Y"
-
-obsacles=[((5,5),(6,6)),((8,3),(9,4))]
-
-for obsacle in obsacles:
-
-    bottom_left_coord_x = obsacle[0][0]
-    bottom_left_coord_y = obsacle[0][1]
-    top_right_coord_x = obsacle[1][0]
-    top_right_coord_y = obsacle[1][1]
-
-    env.add_obstacle((bottom_left_coord_x, bottom_left_coord_y), (top_right_coord_x, top_right_coord_y))
+BELIEF_FACTOR = 0.1
+EPOCH_FACTOR = 1
 
 
-agent = Agent(initial_agent_coord_x,initial_agent_coord_y)
+def setUpEnvironment():
+    grid_min_coord_x = 0
+    grid_min_coord_y = 0
+    grid_max_coord_x = 10
+    grid_max_coord_y = 10
+
+    initial_agent_coord_x = 1
+    initial_agent_coord_y = 1
+
+    goal_coord_x = 9
+    goal_coord_y = 5
+
+    env = Environment((grid_min_coord_x, grid_min_coord_y), (grid_max_coord_x, grid_max_coord_y),
+                      (initial_agent_coord_x, initial_agent_coord_y), (goal_coord_x, goal_coord_y))
 
 
+    obsacles = [((5, 5), (6, 6)), ((8, 3), (9, 4))]
 
-'''
+    for obsacle in obsacles:
+        bottom_left_coord_x = obsacle[0][0]
+        bottom_left_coord_y = obsacle[0][1]
+        top_right_coord_x = obsacle[1][0]
+        top_right_coord_y = obsacle[1][1]
 
-wp = PomdpWaypointPlanner(env, agent)
-plan,actions = wp.plan()
+        env.add_obstacle((bottom_left_coord_x, bottom_left_coord_y), (top_right_coord_x, top_right_coord_y))
 
-agent.coord=(4,0)
-wp = PomdpWaypointPlanner(env,agent)
-new_plan,actions=wp.plan()
+    agent = Agent(initial_agent_coord_x, initial_agent_coord_y)
 
-plan=plan+new_plan
+    return env,agent
 
-
-print(plan)
-print ("plan size "+str(len(plan)))
-print (actions)
-print ("action size "+str(len(actions)))
-
-wp.visualise(plan)
-'''
-
-def execute_plan():
+def setUpBLEs():
 
     bles = []
-
     ble1 = A_BLE(4, -73, (0, 0))
     ble2 = A_BLE(4, -73, (0, 10))
     ble3 = A_BLE(4, -73, (10, 0))
@@ -88,7 +61,6 @@ def execute_plan():
     ble6 = A_BLE(4, -73, (2, 8))
     ble7 = A_BLE(4, -73, (8, 2))
     ble8 = A_BLE(4, -73, (4, 6))
-
 
     bles.append(ble1)
     bles.append(ble2)
@@ -99,42 +71,126 @@ def execute_plan():
     bles.append(ble7)
     bles.append(ble8)
 
+    return bles
 
-    trace = []
-
-
+def setUpWayPointsWithDataDistribution(bles):
     waypoints = blemodule.fill_the_way_points(bles)
+    return waypoints
+
+def updateBeliefsByActionToBeExecuted(beliefs, current_believed_waypoint_tuple, action, env):
+    tuples = TU.getTuplesInPriorityForAction(current_believed_waypoint_tuple, action)
+    for i in range(len(tuples)):
+        tuple = tuples[i]
+        if i == 0:
+            if env.is_valid_waypoint(tuple):
+                beliefs[TU.getStringFromTuple(tuple)] = beliefs[TU.getStringFromTuple(
+                    current_believed_waypoint_tuple)] + BELIEF_FOR_ACTION_SUCCESSFUL
+            else:
+                beliefs[TU.getStringFromTuple(current_believed_waypoint_tuple)] = beliefs[TU.getStringFromTuple(current_believed_waypoint_tuple)] + (
+                        BELIEF_FOR_ACTION_SUCCESSFUL / PRUNE_ACTION_FACTOR)
+
+        if i > 0 and i < 6:
+            if env.is_valid_waypoint(tuple):
+                beliefs[TU.getStringFromTuple(tuple)] = beliefs[TU.getStringFromTuple(
+                    current_believed_waypoint_tuple)] + BELIEF_FOR_ADJACENT_ACTION
+            else:
+                beliefs[TU.getStringFromTuple(current_believed_waypoint_tuple)] = beliefs[TU.getStringFromTuple(current_believed_waypoint_tuple)] + (
+                        BELIEF_FOR_ADJACENT_ACTION / PRUNE_ACTION_FACTOR)
+
+        if i == 6 or i == 7:
+            if env.is_valid_waypoint(tuple):
+                beliefs[TU.getStringFromTuple(tuple)] = beliefs[TU.getStringFromTuple(
+                    current_believed_waypoint_tuple)] + BELIEF_FOR_OTHER_ACTION
+            else:
+                beliefs[TU.getStringFromTuple(current_believed_waypoint_tuple)] = beliefs[TU.getStringFromTuple(current_believed_waypoint_tuple)] + (
+                        BELIEF_FOR_OTHER_ACTION / PRUNE_ACTION_FACTOR)
+
+        if i == 8:
+            if env.is_valid_waypoint(tuple):
+                beliefs[TU.getStringFromTuple(tuple)] = beliefs[TU.getStringFromTuple(
+                    current_believed_waypoint_tuple)] + BELIEF_FOR_OTHER_ACTION
+            else:
+                beliefs[TU.getStringFromTuple(current_believed_waypoint_tuple)] = beliefs[TU.getStringFromTuple(current_believed_waypoint_tuple)] + (
+                        BELIEF_FOR_OTHER_ACTION / PRUNE_ACTION_FACTOR)
+
+    return beliefs
+
+def updateTheUndeterministicRealPointForSimulation(real_point,action,env):
+    underministic_action = random.randint(50, 100)
+    tuples = TU.getTuplesInPriorityForAction(real_point, action)
+    for i in range(len(tuples)):
+        tuple = tuples[i]
+        if i == 0:
+            if env.is_valid_waypoint(tuple):
+                if underministic_action > 21:
+                    real_point = tuple
+            else:
+                real_point = real_point
+
+        if i > 0 and i < 6:
+            slot_for_i = ((6 + ((i - 1) * 3)), (6 + (i) * 3))
+            if env.is_valid_waypoint(tuple):
+                if underministic_action > slot_for_i[0] and underministic_action <= slot_for_i[1]:
+                    real_point = tuple
+            else:
+                if underministic_action > slot_for_i[0] and underministic_action <= slot_for_i[1]:
+                    real_point = real_point
+
+        if i == 6 or i == 7:
+            if i == 6:
+                slot_for_i = (4, 6)
+            if i == 7:
+                slot_for_i = (2, 4)
+            if env.is_valid_waypoint(tuple):
+                if underministic_action > slot_for_i[0] and underministic_action <= slot_for_i[1]:
+                    real_point = tuple
+            else:
+                if underministic_action > slot_for_i[0] and underministic_action <= slot_for_i[1]:
+                    real_point = real_point
+
+        if i == 8:
+            slot_for_i = (0, 2)
+            if env.is_valid_waypoint(tuple):
+                if underministic_action > slot_for_i[0] and underministic_action <= slot_for_i[1]:
+                    real_point = tuple
+            else:
+                if underministic_action > slot_for_i[0] and underministic_action <= slot_for_i[1]:
+                    real_point = real_point
+
+def execute_plan():
+
+    bles = setUpBLEs()
+    env,agent = setUpEnvironment()
+
+
+    waypoints = setUpWayPointsWithDataDistribution(bles)
+
     beliefs = blemodule.fill_beliefs_equally(waypoints)
-    real_point = agent.coord
-    wp = PomdpWaypointPlanner(env, agent)
 
 
-
+    planner = PomdpWaypointPlanner(env, agent)
 
     reached = False
-
-    proposed_plan=[]
-    proposed_actions=[]
-
     replan = True
 
-    epoch=1;
+    proposed_plan = []
+    proposed_actions = []
 
-    while reached==False:
+
+    trace = []
+    real_point = agent.coord
+
+    while reached == False:
 
         if replan == True:
-          wp = PomdpWaypointPlanner(env, agent)
-          proposed_plan, proposed_actions = wp.plan()
-          #print(proposed_plan.pop(0))
-         # break
+            planner = PomdpWaypointPlanner(env, agent)
+            proposed_plan, proposed_actions = planner.plan()
 
 
         rssi_values = {}
 
         for ble in bles:
             rssi_values[ble.ID] = ble.coord_to_rssi(real_point)
-            #print (rssi_values[ble.ID])
-
 
         waypoint_name = ""
 
@@ -144,20 +200,17 @@ def execute_plan():
             value = 0
 
             for ble in bles:
-               value+=math.log(scipy.stats.norm(waypoint.means[ble.ID], waypoint.variances[ble.ID]).pdf(rssi_values[ble.ID]))
+                value += math.log(
+                    scipy.stats.norm(waypoint.means[ble.ID], waypoint.variances[ble.ID]).pdf(rssi_values[ble.ID]))
 
-            value+=math.log(beliefs[waypoint.W])
+            value += math.log(beliefs[waypoint.W])
 
-
-            if value>max_value :
+            if value > max_value:
                 waypoint_name = waypoint.W
                 max_value = value
 
-            #print("Waypoint :" + waypoint.W + "Value " + str(value))
 
-        #print("Predicted  : "+waypoint_name)
-
-        beliefs[waypoint_name]+=+BELIEF_FOR_ACTION_SUCCESSFUL
+        beliefs[waypoint_name] += +BELIEF_FOR_ACTION_SUCCESSFUL
 
         waypoint_tuple_str = waypoint_name.split("_")
         waypoint_tuple = (int(waypoint_tuple_str[0]), int(waypoint_tuple_str[1]))
@@ -174,16 +227,12 @@ def execute_plan():
             replan = True
             continue
 
-        #action = possible_actions[random.randint(0,len(possible_actions)-1)]
         action = proposed_actions.pop(0)
-
 
         proposed_tuple = proposed_plan.pop(0)
 
-
-
-        if TU.cmp(predicted_tuple,proposed_tuple)!=0:
-            #note real point is not moved for sake of simulation, we make plan assuming robot is at predicted point
+        if TU.cmp(predicted_tuple, proposed_tuple) != 0:
+            # note real point is not moved for sake of simulation, we make plan assuming robot is at predicted point
             agent.coord = predicted_tuple
             replan = True
             print("-------")
@@ -194,96 +243,22 @@ def execute_plan():
             print("real :")
             print(real_point)
             continue
-            #you can take the real action as it is believed you are on correct path
+
         else:
+            # you can take the real action as it is believed you are on correct path
             replan = False
 
 
-        underministic_action = random.randint(50,100)
-
-        tuples = TU.getTuplesInPriorityForAction(waypoint_tuple,action)
-        for i in range(len(tuples)):
-            tuple = tuples[i]
-            if i==0:
-                if env.is_valid_waypoint(tuple):
-                  beliefs[TU.getStringFromTuple(tuple)]=beliefs[TU.getStringFromTuple(waypoint_tuple)]+BELIEF_FOR_ACTION_SUCCESSFUL
-                else:
-                  beliefs[TU.getStringFromTuple(waypoint_tuple)] = beliefs[TU.getStringFromTuple(waypoint_tuple)]+(BELIEF_FOR_ACTION_SUCCESSFUL/PRUNE_ACTION_FACTOR)
+        beliefs = updateBeliefsByActionToBeExecuted(beliefs,waypoint_tuple,action,env)
+        real_point = updateTheUndeterministicRealPointForSimulation(real_point,action,env)
 
 
-            if i>0 and i<6:
-                if env.is_valid_waypoint(tuple):
-                  beliefs[TU.getStringFromTuple(tuple)]=beliefs[TU.getStringFromTuple(waypoint_tuple)]+BELIEF_FOR_ADJACENT_ACTION
-                else:
-                   beliefs[TU.getStringFromTuple(waypoint_tuple)] = beliefs[TU.getStringFromTuple(waypoint_tuple)]+(BELIEF_FOR_ADJACENT_ACTION/PRUNE_ACTION_FACTOR)
 
-
-            if i==6 or i==7:
-                if env.is_valid_waypoint(tuple):
-                    beliefs[TU.getStringFromTuple(tuple)] = beliefs[TU.getStringFromTuple(waypoint_tuple)]+BELIEF_FOR_OTHER_ACTION
-                else:
-                    beliefs[TU.getStringFromTuple(waypoint_tuple)] = beliefs[TU.getStringFromTuple(waypoint_tuple)]+(BELIEF_FOR_OTHER_ACTION/PRUNE_ACTION_FACTOR)
-
-            if i==8:
-                if env.is_valid_waypoint(tuple):
-                   beliefs[TU.getStringFromTuple(tuple)] = beliefs[TU.getStringFromTuple(waypoint_tuple)] + BELIEF_FOR_OTHER_ACTION
-                else:
-                    beliefs[TU.getStringFromTuple(waypoint_tuple)] = beliefs[TU.getStringFromTuple(waypoint_tuple)]+(BELIEF_FOR_OTHER_ACTION/PRUNE_ACTION_FACTOR)
-
-
-        tuples = TU.getTuplesInPriorityForAction(real_point, action)
-        for i in range(len(tuples)):
-                tuple = tuples[i]
-                if i == 0:
-                    if env.is_valid_waypoint(tuple):
-                      if underministic_action > 21:
-                        real_point = tuple
-                    else:
-                        real_point = real_point
-
-                if i > 0 and i < 6:
-                    slot_for_i = ((6 + ((i-1) * 3)), (6 + (i) * 3))
-                    if env.is_valid_waypoint(tuple):
-                        if underministic_action > slot_for_i[0] and underministic_action <= slot_for_i[1]:
-                            real_point = tuple
-                    else:
-                        if underministic_action > slot_for_i[0] and underministic_action <= slot_for_i[1]:
-                            real_point = real_point
-
-                if i == 6 or i == 7:
-                    if i == 6:
-                        slot_for_i = (4, 6)
-                    if i == 7:
-                        slot_for_i = (2, 4)
-                    if env.is_valid_waypoint(tuple):
-                        if underministic_action > slot_for_i[0] and underministic_action <= slot_for_i[1]:
-                            real_point = tuple
-                    else:
-                        if underministic_action > slot_for_i[0] and underministic_action <= slot_for_i[1]:
-                            real_point = real_point
-
-                if i == 8:
-                    slot_for_i = (0, 2)
-                    if env.is_valid_waypoint(tuple):
-                        if underministic_action > slot_for_i[0] and underministic_action <= slot_for_i[1]:
-                            real_point = tuple
-                    else:
-                        if underministic_action > slot_for_i[0] and underministic_action <= slot_for_i[1]:
-                            real_point = real_point
-        #print("real point :")
-        #print (real_point)
         trace.append(real_point)
 
-        epoch+=1
-
-
-    #print("Action took : "+action+" New point "+str(test_point[0])+"_"+str(test_point[1]));
 
     print (trace)
-    wp.visualise(trace)
+    planner.visualise(trace)
 
 
 execute_plan()
-
-
-
