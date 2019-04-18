@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="93ee04e0-a494-4125-be3b-265498d4d2f0" name="Default Changelist" comment="uncommenting runner in environment">
-      <change afterPath="$PROJECT_DIR$/modules/main_auto.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/modules/pomdp_waypoint_planner.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/modules/tupleutilities.py" afterDir="false" />
+    <list default="true" id="93ee04e0-a494-4125-be3b-265498d4d2f0" name="Default Changelist" comment="Adding discount">
+      <change afterPath="$PROJECT_DIR$/modules/main_auto_belief_addition.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/agent.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/all_Ble.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/all_Ble.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/ble.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/ble.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/environment.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/environment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trail.py" beforeDir="false" afterPath="$PROJECT_DIR$/trail.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/main_auto.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/main_auto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/pomdp_waypoint_planner.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/pomdp_waypoint_planner.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -39,8 +34,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/all_Ble.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" column="10" selection-start-line="18" selection-start-column="10" selection-end-line="18" selection-end-column="10" />
+            <state relative-caret-position="22">
+              <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -51,8 +46,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/modules/main_auto.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4290">
-              <caret line="286" column="14" lean-forward="true" selection-start-line="286" selection-start-column="14" selection-end-line="286" selection-end-column="14" />
+            <state relative-caret-position="381">
+              <caret line="289" lean-forward="true" selection-start-line="289" selection-end-line="289" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/main_auto_belief_addition.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="16" column="34" lean-forward="true" selection-end-line="289" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -63,8 +70,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/pomdp_waypoint_planner.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1830">
-              <caret line="122" column="29" selection-start-line="122" selection-start-column="29" selection-end-line="122" selection-end-column="29" />
+            <state relative-caret-position="65">
+              <caret line="119" column="43" selection-start-line="119" selection-start-column="43" selection-end-line="119" selection-end-column="43" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
               </folding>
@@ -179,14 +186,15 @@
         <option value="$PROJECT_DIR$/eval_kalman_filter.py" />
         <option value="$PROJECT_DIR$/modules/main.py" />
         <option value="$PROJECT_DIR$/modules/waypoint_planner.py" />
-        <option value="$PROJECT_DIR$/modules/pomdp_waypoint_planner.py" />
         <option value="$PROJECT_DIR$/modules/agent.py" />
         <option value="$PROJECT_DIR$/trail.py" />
         <option value="$PROJECT_DIR$/modules/ble.py" />
         <option value="$PROJECT_DIR$/modules/tupleutilities.py" />
-        <option value="$PROJECT_DIR$/modules/main_auto.py" />
-        <option value="$PROJECT_DIR$/modules/all_Ble.py" />
         <option value="$PROJECT_DIR$/modules/environment.py" />
+        <option value="$PROJECT_DIR$/modules/all_Ble.py" />
+        <option value="$PROJECT_DIR$/modules/pomdp_waypoint_planner.py" />
+        <option value="$PROJECT_DIR$/modules/main_auto_belief_addition.py" />
+        <option value="$PROJECT_DIR$/modules/main_auto.py" />
       </list>
     </option>
   </component>
@@ -346,7 +354,7 @@
       <updated>1553628263294</updated>
       <workItem from="1553628265103" duration="1893000" />
       <workItem from="1555437371923" duration="6080000" />
-      <workItem from="1555448064209" duration="40904000" />
+      <workItem from="1555448064209" duration="46687000" />
     </task>
     <task id="LOCAL-00001" summary="trajectory plan">
       <created>1555440769271</created>
@@ -390,14 +398,22 @@
       <option name="project" value="LOCAL" />
       <updated>1555524001061</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Underterministic and noisy is successful !!">
+      <created>1555542285740</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1555542285740</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="48877000" />
+    <option name="totallyTimeSpent" value="54660000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25767368" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -442,7 +458,8 @@
     <MESSAGE value="Commit all_ble code and few bug fixes" />
     <MESSAGE value="Changing belief variables" />
     <MESSAGE value="uncommenting runner in environment" />
-    <option name="LAST_COMMIT_MESSAGE" value="uncommenting runner in environment" />
+    <MESSAGE value="Underterministic and noisy is successful !!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Underterministic and noisy is successful !!" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file:///System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/matplotlib/figure.py">
@@ -532,26 +549,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/all_Ble.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="10" selection-start-line="18" selection-start-column="10" selection-end-line="18" selection-end-column="10" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/pomdp_waypoint_planner.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1830">
-          <caret line="122" column="29" selection-start-line="122" selection-start-column="29" selection-end-line="122" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/waypoint_planner.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="145">
@@ -592,10 +589,40 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/pomdp_waypoint_planner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="65">
+          <caret line="119" column="43" selection-start-line="119" selection-start-column="43" selection-end-line="119" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/all_Ble.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/main_auto_belief_addition.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="34" lean-forward="true" selection-end-line="289" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/modules/main_auto.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4290">
-          <caret line="286" column="14" lean-forward="true" selection-start-line="286" selection-start-column="14" selection-end-line="286" selection-end-column="14" />
+        <state relative-caret-position="381">
+          <caret line="289" lean-forward="true" selection-start-line="289" selection-end-line="289" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
