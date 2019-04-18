@@ -91,7 +91,7 @@ class WaypointPlanner:
 			prev_state = current_state
 
 		if current_state[0]==goal_state[0] and current_state[1]==goal_state[1]:
-			print("solved")
+			#print("solved")
 			while(trace[self._state_to_key(current_state)] != None):
 				(parent_state, action) = trace[self._state_to_key(current_state)]
 				state_list.append(parent_state)

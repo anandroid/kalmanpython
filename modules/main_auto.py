@@ -116,7 +116,7 @@ def updateBeliefsByActionToBeExecuted(beliefs, current_believed_waypoint_tuple, 
     return beliefs
 
 def updateTheUndeterministicRealPointForSimulation(real_point,action,env):
-    underministic_action = random.randint(50, 100)
+    underministic_action = random.randint(1, 100)
     tuples = TU.getTuplesInPriorityForAction(real_point, action)
     for i in range(len(tuples)):
         tuple = tuples[i]
@@ -157,6 +157,8 @@ def updateTheUndeterministicRealPointForSimulation(real_point,action,env):
                 if underministic_action > slot_for_i[0] and underministic_action <= slot_for_i[1]:
                     real_point = real_point
 
+    return real_point
+
 def execute_plan():
 
     bles = setUpBLEs()
@@ -180,11 +182,15 @@ def execute_plan():
     trace = []
     real_point = agent.coord
 
+    replan_executed_counter=0
+    ble_data_inferred_counter=0
+
     while reached == False:
 
         if replan == True:
             planner = PomdpWaypointPlanner(env, agent)
             proposed_plan, proposed_actions = planner.plan()
+            replan_executed_counter+=1
 
 
         rssi_values = {}
@@ -209,6 +215,7 @@ def execute_plan():
                 waypoint_name = waypoint.W
                 max_value = value
 
+        ble_data_inferred_counter+=1
 
         beliefs[waypoint_name] += +BELIEF_FOR_ACTION_SUCCESSFUL
 
@@ -258,6 +265,9 @@ def execute_plan():
 
 
     print (trace)
+    print ("Replanned : "+str(replan_executed_counter)+" times")
+    print ("Data inferred  : "+str(ble_data_inferred_counter)+" times")
+    print ("Actions Executed By Robot : "+str(len(trace))+" times")
     planner.visualise(trace)
 
 

@@ -12,7 +12,6 @@ def getTuplesInPriorityForAction(waypoint_tuple,action):
     tuples = []
 
     if action=="moveLeft":
-        print ("inside tupple "+action)
         tuple = (waypoint_tuple[0] - 1, waypoint_tuple[1])
         tuples.append(tuple)
 
