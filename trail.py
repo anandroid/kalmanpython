@@ -37,14 +37,17 @@ ax.set(xlabel='Normal Distribution', ylabel='Frequency')
 print(math.log(scipy.stats.norm(-73, 2).pdf(-76)))
 
 '''
+#print(scipy.stats.norm(73, 4).pdf(73))
 
-print (math.log(0.4))
-print (math.log(0.8))
-print (math.log(0.2))
+#print (math.log(0.4))
+print (math.log(2.0))
+print (math.log(1.4))
+print (math.log(1.2))
+#print (math.log(0.2))
 
 print("---")
-print (math.log(0.4)/math.log(0.8))
-print (math.log(0.2)/math.log(0.8))
+#print (math.log(0.4)/math.log(0.8))
+#print (math.log(0.2)/math.log(0.8))
 
 
 

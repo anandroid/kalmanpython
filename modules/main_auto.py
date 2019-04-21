@@ -10,7 +10,7 @@ from all_Ble import A_BLE
 from environment import Environment
 from pomdp_waypoint_planner import PomdpWaypointPlanner
 
-BELIEF_FOR_ACTION_SUCCESSFUL = 0.8
+BELIEF_FOR_ACTION_SUCCESSFUL = 1
 BELIEF_FOR_ADJACENT_ACTION = 0.4
 BELIEF_FOR_OTHER_ACTION = 0.2
 
@@ -79,6 +79,7 @@ def setUpWayPointsWithDataDistribution(bles):
 
 def updateBeliefsByActionToBeExecuted(beliefs, current_believed_waypoint_tuple, action, env):
     tuples = TU.getTuplesInPriorityForAction(current_believed_waypoint_tuple, action)
+    beliefs = blemodule.resetBeliefs(beliefs)
     for i in range(len(tuples)):
         tuple = tuples[i]
         if i == 0:
@@ -116,7 +117,7 @@ def updateBeliefsByActionToBeExecuted(beliefs, current_believed_waypoint_tuple, 
     return beliefs
 
 def updateTheUndeterministicRealPointForSimulation(real_point,action,env):
-    underministic_action = random.randint(1, 100)
+    underministic_action = random.randint(50, 100)
     tuples = TU.getTuplesInPriorityForAction(real_point, action)
     for i in range(len(tuples)):
         tuple = tuples[i]
@@ -187,10 +188,7 @@ def execute_plan():
 
     while reached == False:
 
-        if replan == True:
-            planner = PomdpWaypointPlanner(env, agent)
-            proposed_plan, proposed_actions = planner.plan()
-            replan_executed_counter+=1
+
 
 
         rssi_values = {}
@@ -209,7 +207,9 @@ def execute_plan():
                 value += math.log(
                     scipy.stats.norm(waypoint.means[ble.ID], waypoint.variances[ble.ID]).pdf(rssi_values[ble.ID]))
 
-            value += math.log(beliefs[waypoint.W])
+            #value += math.log(beliefs[waypoint.W])
+
+            #print(waypoint.W+" : "+str(value))
 
             if value > max_value:
                 waypoint_name = waypoint.W
@@ -217,11 +217,16 @@ def execute_plan():
 
         ble_data_inferred_counter+=1
 
-        beliefs[waypoint_name] += +BELIEF_FOR_ACTION_SUCCESSFUL
-
         waypoint_tuple_str = waypoint_name.split("_")
         waypoint_tuple = (int(waypoint_tuple_str[0]), int(waypoint_tuple_str[1]))
         predicted_tuple = waypoint_tuple
+
+        if replan == True:
+            agent.coord = predicted_tuple
+            planner = PomdpWaypointPlanner(env, agent)
+            proposed_plan, proposed_actions = planner.plan()
+            replan_executed_counter += 1
+
 
         if env.is_goal_state(predicted_tuple):
             print("Goal reached")

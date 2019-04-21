@@ -5,7 +5,7 @@ import scipy.stats
 from agent import Agent
 
 
-SIZE_FACTOR_OF_WAYPOINT = 1
+SIZE_FACTOR_OF_WAYPOINT = 2
 BELIEF_FOR_ACTION_SUCCESSFUL = 0.8
 BELIEF_FOR_ADJACENT_ACTION = 0.4
 BELIEF_FOR_OTHER_ACTION = 0.2
@@ -57,6 +57,10 @@ def fill_beliefs_equally(waypoints):
          beliefs[waypoint.W] = value
      return beliefs
 
+def resetBeliefs(beliefs):
+    for the_key, the_value in beliefs.items():
+        beliefs[the_key] = 1
+    return beliefs
 
 
 
